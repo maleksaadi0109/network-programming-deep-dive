@@ -1,6 +1,6 @@
 ---
 title: Day 1
-date: 2026-03-17
+date: 2026-03-16
 topic: TCP Server Boilerplate in C
 ---
 
