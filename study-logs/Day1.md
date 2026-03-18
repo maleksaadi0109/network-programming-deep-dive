@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ---
 title: Day 1
 date: 2026-03-17
@@ -180,4 +180,4 @@ int main() {
 
 1. **The Connection Queue (`listen()`)**  
    This transitions the socket into a passive state. The `5` represents the backlog — it tells the kernel to queue up to five incoming client connection requests before it starts rejecting new ones.
->>>>>>> 98805b557788d6e00ed578b6cf2784e94d711ed8
+
