@@ -14,7 +14,5 @@ This repo is my daily learning journal for low‑level, system‑level networkin
 **Daily links**
 - [Day 1](study-logs/Day1.md)   - [Day 2](study-logs/Day2.md)
 
-<<<<<<< HEAD
-If you’re following along, feel free to explore the daily notes and compare progress over time.
-=======
+
 If you’re following along, feel free to explore the daily notes and compare progress over time.
