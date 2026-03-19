@@ -12,7 +12,7 @@ This repo is my daily learning journal for low‑level, system‑level networkin
 - Each day includes a summary, code, and a short deep‑dive on key ideas.
 
 **Daily links**
-- [Day 1](study-logs/Day1.md)
+- [Day 1](study-logs/Day1.md)   - [Day 2](study-logs/Day2.md)
 
 **References I use**
 - Beej’s Guide to Network Programming
@@ -20,4 +20,5 @@ This repo is my daily learning journal for low‑level, system‑level networkin
 - GeeksforGeeks (https://www.geeksforgeeks.org/)
 
 If you’re following along, feel free to explore the daily notes and compare progress over time.
+
 
