@@ -47,9 +47,9 @@ int main()
         
     bzero(&servaddr, sizeof(servaddr));
 
-    servaddr.sin6_family = AF_INET;
-     inet_pton(AF_INET6, "2610:20:6f15:15::27", &servaddr.sin6_addr);
-     servaddr.sin6_port = htons(13); 
+    servaddr.sin6_family = AF_INET6;
+    inet_pton(AF_INET6, "2610:20:6f15:15::27", &servaddr.sin6_addr);
+    servaddr.sin6_port = htons(13); 
 
     if (connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) != 0) {
         printf("connection with the server failed...\n");

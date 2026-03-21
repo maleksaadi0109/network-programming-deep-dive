@@ -12,7 +12,7 @@ Today I completed the full TCP round‑trip: a C server that accepts a client an
 
 ## The Code
 
-### TcpServer.C (Server)
+### TcpServer_IPv4.c (Server)
 
 ```c
 #include <stdio.h> 
@@ -104,7 +104,7 @@ int main()
 }
 ```
 
-### TcpClient.c (Client)
+### TcpClient._IPv4.c (Client)
 
 ```c
 #include <arpa/inet.h>
@@ -143,8 +143,8 @@ void func(int sockfd)
 
 int main()
 {
-    int sockfd, connfd;
-    struct sockaddr_in servaddr, cli;
+    int sockfd;
+    struct sockaddr_in servaddr;
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {
@@ -175,20 +175,9 @@ int main()
 
 ---
 
-## Deep Dive Notes
+## Notes
 
-1. **Full Server Lifecycle**  
-   I moved from just creating/listening to actually **accepting a client** and handling a session. `accept()` returns a new file descriptor that represents the connected client socket, which is distinct from the listening socket.
-
-1. **Client Connection Flow**  
-   On the client side, `connect()` actively initiates the TCP handshake to `127.0.0.1:8080`. This is the mirror step to `accept()` on the server.
-
-1. **Round‑Trip Messaging (`read` / `write`)**  
-   Both client and server loop over `read()` and `write()` calls. This is the simplest form of a text protocol, where each side blocks until input arrives.
-
-1. **Termination Protocol**  
-   Sending the string `"exit"` becomes a basic control message to shut down both sides cleanly. This is a tiny but real protocol convention.
-
-1. **Consistent Port Configuration**  
-   Standardizing `PORT 8080` on both ends prevents mismatch errors and makes testing repeatable.
-
+1. This was the first day I completed the full request/response loop instead of stopping at `listen()`.
+1. The server now goes one step further than Day 1: it calls `accept()` to create a connected socket for a specific client.
+1. The client uses `connect()` to actively open the TCP session, then both programs exchange messages with `read()` and `write()`.
+1. I standardized the examples in this project around port `8080` for the client/server round-trip files.

@@ -5,10 +5,12 @@
 #include <string.h> 
 #include <sys/socket.h> 
 #include <sys/types.h> 
+#include <time.h>
 #include <unistd.h> 
 
 #define MAX 80 
 #define PORT 8080 
+#define LISTENQ 5
 #define SA struct sockaddr 
   
 
@@ -42,26 +44,34 @@ int main()
     else
         printf("Socket successfully binded..\n"); 
   
-     Listen(sockfd, LISTENQ);
+    if (listen(sockfd, LISTENQ) != 0) {
+        printf("Listen failed...\n");
+        close(sockfd);
+        exit(1);
+    }
+    else {
+        printf("Server listening..\n");
+    }
         
     len = sizeof(cli); 
-  
-    
-    if (connfd < 0) { 
-        printf("server accept failed...\n"); 
-        exit(0); 
-    } 
-    else
-        printf("server accept the client...\n"); 
-  
-    
-     for(;;){
-       connfd = accept(sockfd, (SA*)&cli, &len); 
-       ticks=time(NULL);
-       snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
-       Write(connfd, buff, strlen(buff));
-       close(connfd);
-     }
-     return 0;
+
+    for (;;) {
+        connfd = accept(sockfd, (SA*)&cli, &len);
+        if (connfd < 0) {
+            printf("server accept failed...\n");
+            close(sockfd);
+            exit(1);
+        }
+
+        printf("server accepted a client...\n");
+
+        ticks = time(NULL);
+        snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
+        write(connfd, buff, strlen(buff));
+        close(connfd);
+    }
+
+    close(sockfd);
+    return 0;
     
 }
