@@ -2,6 +2,8 @@
 
 This repo is my daily learning journal for low‑level, system‑level networking in C on Linux.
 
+Current milestone: I finished Chapter 1 of *UNIX Network Programming: The Sockets Networking API* and started building basic UDP client/server examples.
+
 **What I plan to do here**
 - Study core networking concepts (sockets, TCP/UDP, byte order, and OS‑level APIs).
 - Write small C programs that interact directly with the kernel networking stack.
@@ -12,7 +14,7 @@ This repo is my daily learning journal for low‑level, system‑level networkin
 - Each day includes a summary, code, and a short deep‑dive on key ideas.
 
 **Daily links**
-- [Day 1](study-logs/Day1.md)   - [Day 2](study-logs/Day2.md)   - [Day 3](study-logs/Day3.md)
+- [Day 1](study-logs/Day1.md)   - [Day 2](study-logs/Day2.md)   - [Day 3](study-logs/Day3.md)   - [Day 4](study-logs/Day4.md)
 
 **References I use**
 - Beej’s Guide to Network Programming
