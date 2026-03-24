@@ -15,6 +15,7 @@ void func(int sockfd)
 {
     char buff[MAX];
     int n;
+  
     for (;;) {
         bzero(buff, sizeof(buff));
         printf("Enter the string : ");
