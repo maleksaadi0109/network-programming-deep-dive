@@ -1,73 +1,101 @@
 ---
 title: Day 6
 date: 2026-04-07
-topic: Busy Day and Light Review
+topic: Building a TCP epoll Server from Scratch
 ---
 
-# Day 6 - Busy Day and Light Review
+# Day 6 - Building `Tcp_epoll_server.c` from Scratch
 
-Today was a busy day, so I could not spend proper time learning new networking topics. I only did a light review of the `Tcp_epoll_server.c` file and cleaned up the file by removing comments.
+Today I completed the `Tcp_epoll_server.c` file end-to-end. I built a TCP echo server using `epoll` in edge-triggered mode, and organized the code into clear functions for setup, accepting clients, and handling client data.
 
-Even though I did not study deeply today, I still stayed connected to the project and looked again at the structure of an event-driven TCP server using `epoll`.
-
-Most of my time today went to other responsibilities, so this was not a full learning session like the previous days. Still, I did not want to completely stop the routine, so I opened the project, looked through the server code, and tried to keep the important ideas fresh in my mind.
-
-While reading the file, I noticed that even small cleanup work can help me understand the code better. Removing comments made me focus more directly on the actual functions, the event loop, and the relationship between accepting connections and reading client data.
+The goal of this file was to move from `select()` style thinking to a more scalable event-driven model where one process can monitor multiple sockets efficiently.
 
 ---
 
 ## What I Did Today
 
-1. I opened the `Tcp_epoll_server.c` file.
-1. I reviewed the general structure of the server.
-1. I removed comments from the file to make it cleaner.
-1. I checked the code flow again at a high level.
+1. I created and configured the listening TCP socket on port `8080`.
+1. I added non-blocking mode using `fcntl(..., O_NONBLOCK)`.
+1. I initialized `epoll` with `epoll_create1()` and registered the master socket.
+1. I implemented accepting new clients and adding each client socket to the `epoll` watch list.
+1. I implemented client read handling and echo response with `send()`.
+1. I built the main event loop using `epoll_wait()` to dispatch socket events.
 
 ---
 
 ## What Changed Today
 
-- The main visible change was cleaning `Tcp_epoll_server.c` by removing the comments.
-- No major new feature or new networking code was added today.
-- This was more of a maintenance and review day than a full study day.
+- Added a complete `epoll`-based TCP server implementation in `Tcp_epoll_server.c`.
+- Structured the program into reusable functions:
+- `set_nonblocking()`
+- `setup_server()`
+- `setup_epoll()`
+- `accept_new_connection()`
+- `handle_client_data()`
+- `main()` as the event loop controller.
 
 ---
 
-## Visual Summary (Picture)
+## Visual Summary (Picture of Server Flow)
 
 ```mermaid
-flowchart LR
-    A["Busy schedule"] --> B["Short coding time"]
-    B --> C["Opened Tcp_epoll_server.c"]
-    C --> D["Reviewed epoll server flow"]
-    D --> E["Removed comments"]
-    E --> F["Cleaner file and quick revision"]
-    F --> G["No deep new study today"]
+flowchart TD
+    A["Create socket()"] --> B["bind() + listen()"]
+    B --> C["Set master socket non-blocking"]
+    C --> D["epoll_create1()"]
+    D --> E["epoll_ctl ADD master socket"]
+    E --> F["epoll_wait() loop"]
+    F --> G{"Event on master socket?"}
+    G -->|Yes| H["accept() new client"]
+    H --> I["Set client non-blocking"]
+    I --> J["epoll_ctl ADD client socket"]
+    G -->|No| K["read() client data"]
+    K --> L{"Client disconnected?"}
+    L -->|Yes| M["close(client_socket)"]
+    L -->|No| N["send() echo response"]
+    N --> F
+    M --> F
 ```
 
-This picture shows that Day 6 was a continuity day: limited time, light review, and small cleanup.
+This picture shows the exact runtime behavior of the server: initialize once, then react to events in a continuous `epoll_wait()` loop.
 
 ---
 
-## Study Note
+## File Explanation (`Tcp_epoll_server.c`)
 
-I was busy today, so I could not learn these sections in depth.
+### 1) `set_nonblocking(int fd)`
 
-I could not give enough time to fully study new parts, examples, or theory today. This was mainly a review and cleanup day, not a strong progress day.
+Uses `fcntl()` to read existing flags and set `O_NONBLOCK`. This is required so sockets do not block the whole process.
 
----
+### 2) `setup_server(int port)`
 
-## Quick Reminder
+Creates the master socket, enables `SO_REUSEADDR`, binds to `INADDR_ANY:8080`, starts listening, then returns the listening file descriptor.
 
-- `epoll` is used to watch many file descriptors efficiently.
-- The server listens for new connections on the main socket.
-- Client sockets are added to the `epoll` instance.
-- When data is ready, the server reads it and sends a response back.
+### 3) `setup_epoll(int master_socket)`
+
+Creates an `epoll` instance and registers the master socket with `EPOLLIN` so the server is notified when new clients are ready to be accepted.
+
+### 4) `accept_new_connection(int epoll_fd, int master_socket)`
+
+Accepts incoming client connections, sets each new client socket to non-blocking mode, and adds it to `epoll` with `EPOLLIN | EPOLLET`.
+
+### 5) `handle_client_data(int client_socket)`
+
+Reads incoming data from the client:
+- If `read()` returns `0`, the client disconnected, so the socket is closed.
+- If data exists, the server prints it and echoes it back using `send()`.
+- If non-blocking read is temporarily unavailable (`EAGAIN` / `EWOULDBLOCK`), it does not treat that as a fatal error.
+
+### 6) `main()`
+
+Starts the server and epoll, then runs forever:
+- waits for ready events with `epoll_wait()`
+- dispatches event handling either to accept new clients or process existing client data.
 
 ---
 
 ## Reflection
 
-Not every study day has to be a big one. Today was limited, but I still kept the learning routine alive by reviewing the code and making a small cleanup. Tomorrow I can continue with a deeper study session.
+Today was a major practical step. I did not only review concepts, I built a full working event-driven server using `epoll`. This helped me connect the theory of non-blocking sockets and I/O multiplexing to real C code structure.
 
-One useful thing I learned from today is that consistency still matters, even on busy days. A short review is better than doing nothing, because it helps me stay familiar with the code and makes it easier to continue next time.
+After finishing this file, I have a clearer foundation for the next step: improving robustness (full edge-triggered read loops, better error handling, and cleaner client lifecycle management).
