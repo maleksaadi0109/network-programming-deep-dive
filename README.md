@@ -19,6 +19,7 @@ Each day is stored inside `study-logs/`:
 - `Day3.md`
 - `Day4.md`
 - `Day5.md`
+- `Day6.md`
 
 Each note includes:
 
@@ -34,6 +35,7 @@ Each note includes:
 - [Day 3](study-logs/Day3.md) - OSI model, sockets interface, and the TCP daytime server
 - [Day 4](study-logs/Day4.md) - UDP client/server basics and finishing Chapter 1
 - [Day 5](study-logs/Day5.md) - Non-blocking TCP server with `select()`
+- [Day 6](study-logs/Day6.md) - Busy day, light review of the `epoll` server file
 
 ## Topics Covered So Far
 
