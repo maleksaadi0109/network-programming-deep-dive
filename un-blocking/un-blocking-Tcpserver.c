@@ -122,6 +122,7 @@ int main() {
             perror("Select error");
             exit(EXIT_FAILURE);
         }
+        
 
         for (int i = 0; i <= max_sd; i++) {
             if (FD_ISSET(i, &readfds)) {

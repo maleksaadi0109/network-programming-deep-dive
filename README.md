@@ -1,58 +1,50 @@
-# Unix Networking - Study Log
+# Unix Networking Study Journal
 
-This repository is my learning journal for low-level Unix and Linux network programming in C.
+Hands-on Linux/Unix network programming notes and C practice files.  
+The goal is to move from basic socket programming to scalable event-driven servers.
 
-Current milestone: I moved from basic TCP and UDP examples into a non-blocking TCP server using `select()` and file descriptor sets.
+## Learning Focus
 
-## What This Repo Is For
+- Build TCP/UDP programs directly against the socket API
+- Understand byte order, address structures, and connection lifecycle
+- Practice blocking and non-blocking I/O patterns
+- Move from `select()` to `epoll`-based server design
 
-- Study core networking ideas like sockets, TCP, UDP, byte order, blocking vs non-blocking I/O, and how the OS handles connections.
-- Build small C programs that talk directly to the kernel networking stack.
-- Keep daily study notes that are easy to review later.
+## Repository Layout
 
-## Study Log Structure
+- `TCP/` - Basic TCP examples
+- `UDP/` - Basic UDP examples
+- `TcpDaytimeSystem/` - Daytime client/server practice
+- `un-blocking/` - Non-blocking server with `select()`
+- `epoll_socket_server/` - Event-driven server experiments with `epoll`
+- `study-logs/` - Daily learning notes
 
-Each day is stored inside `study-logs/`:
+## Study Progress
 
-- `Day1.md`
-- `Day2.md`
-- `Day3.md`
-- `Day4.md`
-- `Day5.md`
-- `Day6.md`
+| Day | Topic | Note |
+|---|---|---|
+| 1 | TCP server boilerplate in C | [Day1.md](study-logs/Day1.md) |
+| 2 | TCP client/server communication basics | [Day2.md](study-logs/Day2.md) |
+| 3 | OSI model and sockets interface | [Day3.md](study-logs/Day3.md) |
+| 4 | UDP client/server fundamentals | [Day4.md](study-logs/Day4.md) |
+| 5 | Non-blocking TCP server with `select()` | [Day5.md](study-logs/Day5.md) |
+| 6 | Building `Tcp_epoll_server.c` from scratch | [Day6.md](study-logs/Day6.md) |
+| 7 | Structuring and polishing the `epoll` server workflow | [Day7.md](study-logs/Day7.md) |
 
-Each note includes:
+## Core Topics Covered
 
-- What I studied
-- The main code pattern
-- Important concepts
-- A short reflection
-
-## Daily Notes
-
-- [Day 1](study-logs/Day1.md) - TCP server boilerplate in C
-- [Day 2](study-logs/Day2.md) - TCP client/server communication basics
-- [Day 3](study-logs/Day3.md) - OSI model, sockets interface, and the TCP daytime server
-- [Day 4](study-logs/Day4.md) - UDP client/server basics and finishing Chapter 1
-- [Day 5](study-logs/Day5.md) - Non-blocking TCP server with `select()`
-- [Day 6](study-logs/Day6.md) - Busy day, light review of the `epoll` server file
-
-## Topics Covered So Far
-
-- TCP socket setup with `socket()`, `bind()`, `listen()`, and `accept()`
-- Iterative TCP servers
-- UDP communication with `recvfrom()` and `sendto()`
-- IPv4 basics
-- Socket API structure inside the networking stack
+- `socket()`, `bind()`, `listen()`, `accept()`
+- `recvfrom()` and `sendto()` for UDP
+- IPv4 addressing and socket structures
 - Non-blocking sockets with `fcntl()`
-- I/O multiplexing with `select()`
+- Multiplexing with `select()`
+- Event-driven design with `epoll`
 
-## References I Use
+## References
 
 - Beej's Guide to Network Programming
 - UNIX Network Programming: The Sockets Networking API
-- GeeksforGeeks
+- Linux manual pages (`man 2 socket`, `man 7 epoll`, etc.)
 
-This repo is meant to show progress day by day, so the notes are written in a way that helps me revise later, not just record code.
-
+This repository is a revision-friendly learning trail: each day records what was built, what was understood, and what comes next.
 
