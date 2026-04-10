@@ -18,6 +18,7 @@ The goal is to move from basic socket programming to scalable event-driven serve
 - `un-blocking/` - Non-blocking server with `select()`
 - `epoll_socket_server/` - Event-driven server experiments with `epoll`
 - `http_server.c` - Non-blocking `epoll` HTTP static file server (single-file implementation)
+- `http_server_fork.c` - Multi-process (`fork`) HTTP server using per-worker `epoll` loops
 - `study-logs/` - Daily learning notes
 
 ## Study Progress
@@ -32,6 +33,7 @@ The goal is to move from basic socket programming to scalable event-driven serve
 | 6 | Building `Tcp_epoll_server.c` from scratch | [Day6.md](study-logs/Day6.md) |
 | 7 | Structuring and polishing the `epoll` server workflow | [Day7.md](study-logs/Day7.md) |
 | 8 | Building an `epoll`-based HTTP static file server | [Day8.md](study-logs/Day8.md) |
+| 9 | Deep dive into `fork()` with multi-process HTTP server design | [Day9.md](study-logs/Day9.md) |
 
 ## Core Topics Covered
 
@@ -42,6 +44,7 @@ The goal is to move from basic socket programming to scalable event-driven serve
 - Multiplexing with `select()`
 - Event-driven design with `epoll`
 - Basic HTTP request parsing and static file responses
+- Process-based concurrency with `fork()`
 
 ## References
 
