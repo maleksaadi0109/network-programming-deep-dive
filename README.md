@@ -34,6 +34,7 @@ The goal is to move from basic socket programming to scalable event-driven serve
 | 7 | Structuring and polishing the `epoll` server workflow | [Day7.md](study-logs/Day7.md) |
 | 8 | Building an `epoll`-based HTTP static file server | [Day8.md](study-logs/Day8.md) |
 | 9 | Deep dive into `fork()` with multi-process HTTP server design | [Day9.md](study-logs/Day9.md) |
+| 10 | Timeout handling, write buffering, and event-driven HTTP server design | [Day10.md](study-logs/Day10.md) |
 
 ## Core Topics Covered
 
@@ -45,6 +46,8 @@ The goal is to move from basic socket programming to scalable event-driven serve
 - Event-driven design with `epoll`
 - Basic HTTP request parsing and static file responses
 - Process-based concurrency with `fork()`
+- Idle client timeout management
+- Non-blocking partial-write buffering with `EPOLLOUT`
 
 ## References
 
